@@ -9,7 +9,7 @@ function Header() {
     <div className="w-full h-32 bg-[hsl(var(--primary))]  p-[15px] pl-[25px] flex items-center justify-between">
       <div>
         <Link to="/" className="flex items-center">
-          <img src="../../../assets/logo.png" alt="" className="w-32" />
+          <img src="/assets/logo.png" alt="" className="w-32" />
         </Link>
       </div>
       <HeaderList />
