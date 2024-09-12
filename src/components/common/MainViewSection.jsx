@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 function MainViewSection() {
   const { hash } = useLocation();
   const productsArray = useSelector((state) => state.products.products);
-  console.log(productsArray);
   useEffect(() => {
     if (hash) {
       const element = document.querySelector(hash);

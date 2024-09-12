@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/card";
 import ReusableButton from "./ReusableButton";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
+import ReusableBadge from "./ReusableBadge";
 
 function ProductCard({ product }) {
-  const { id, cat_prefix, title, img, price } = product;
+  const { id, cat_prefix, title, img, price, description } = product;
   return (
     <Card>
       <CardHeader>
@@ -32,10 +34,10 @@ function ProductCard({ product }) {
         />
       </CardContent>
       <CardFooter className=" flex items-end gap-5">
-        <ReusableButton>Order Now !</ReusableButton>
-        <Badge variant="outline">
-          <p className=" text-[hsl(var(--primary))]">{price} $</p>
-        </Badge>
+        <Link to={`/${id}`}>
+          <ReusableButton>Order Now !</ReusableButton>
+        </Link>
+        <ReusableBadge>{price} $</ReusableBadge>
       </CardFooter>
     </Card>
   );

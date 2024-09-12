@@ -7,6 +7,7 @@ import Register from "@/pages/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import authLoader from "./loaders/authLoader";
 import Cart from "@/pages/Cart";
+import ProductPage from "@/pages/ProductPage";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -17,6 +18,10 @@ const browserRouter = createBrowserRouter([
         path: "/",
         element: <Home />,
         index: true,
+      },
+      {
+        path: "/:id",
+        element: <ProductPage />,
       },
       {
         path: "/cart",

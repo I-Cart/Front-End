@@ -21,7 +21,13 @@ const rootPersistConfig = {
   blacklist: ["users"],
 };
 const combinedReducers = combineReducers({
-  cart,
+  cart: persistReducer(
+    {
+      key: "cart",
+      storage,
+    },
+    cart
+  ),
   products: persistReducer(
     {
       key: "products",
