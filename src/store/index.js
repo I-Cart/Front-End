@@ -4,14 +4,27 @@ import products from "./products/productsSlice"
 import categories from "./categories/categoriesSlice"
 import { persistReducer, persistStore, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from "redux-persist"
 import storage from "redux-persist/lib/storage"
+import users from "./users/usersSlice"
+import authSlice from "./auth/authSlice"
 const rootPersistConfig = {
     key: "root",
-    storage
+    storage,
+    blacklist: ["users"]
 }
 const combinedReducers = combineReducers({
     cart,
     products,
-    categories
+    categories,
+    users: persistReducer({
+        key: "users",
+        storage,
+        whitelist: ["users"]
+    }, users),
+    auth: persistReducer({
+        key: "auth",
+        storage,
+        whitelist: ["user"]
+    }, authSlice)
 })
 const persistedReducer = persistReducer(rootPersistConfig, combinedReducers)
 

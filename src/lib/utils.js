@@ -6,6 +6,6 @@ export function cn(...inputs) {
 }
 export function sleep(duration = 700) {
   return new Promise(res => {
-    setTimeout(() => res, duration)
+    setTimeout(res, duration)
   })
 }
