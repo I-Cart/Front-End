@@ -1,5 +1,8 @@
+import Header from "@/components/common/Header";
+import MainViewSection from "@/components/common/MainViewSection";
+
 function Home() {
-  return <div>Home</div>;
+  return <MainViewSection />;
 }
 
 export default Home;
