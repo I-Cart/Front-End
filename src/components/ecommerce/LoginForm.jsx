@@ -18,6 +18,7 @@ import { clearFeedback, login } from "@/store/auth/authSlice";
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import PasswordInput from "../common/PasswordInput";
 
 function LoginForm() {
   const form = useForm({
@@ -41,7 +42,9 @@ function LoginForm() {
   }, [error, toast]);
   useEffect(() => {
     if (loading === "succeeded") {
-      navigate("/");
+      navigate("/", {
+        replace: true,
+      });
       toast({
         title: "✅ Logged in successfully!",
       });
@@ -75,7 +78,11 @@ function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" type="password" {...field} />
+                  <PasswordInput
+                    placeholder="Password"
+                    type="password"
+                    field={field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

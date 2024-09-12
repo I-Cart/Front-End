@@ -25,15 +25,17 @@ const browserRouter = createBrowserRouter([
   },
   {
     path: "/",
-    loader: async () => {
+    loader: async ({ request }) => {
+      const pathname = new URL(request.url).pathname;
+
       let isRehydrated = store.getState().auth._persist.rehydrated;
       while (!isRehydrated) {
         isRehydrated = await store.getState().auth._persist.rehydrated;
       }
       const user = store.getState().auth.user;
-      if (user) {
+      if (pathname === "/login" && user) return redirect("/");
+      if (pathname === "/register" && user?.role !== "admin")
         return redirect("/");
-      }
       return null;
     },
     element: <LoginLayout />,

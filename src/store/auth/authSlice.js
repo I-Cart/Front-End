@@ -12,6 +12,11 @@ const usersSlice = createSlice({
         clearFeedback: (state) => {
             state.error = null
             state.loading = "idle";
+        },
+        logout(state) {
+            state.error = null;
+            state.loading = "idle";
+            state.user = null
         }
     },
     extraReducers(builder) {
@@ -28,5 +33,5 @@ const usersSlice = createSlice({
     },
 });
 export { login }
-export const { clearFeedback } = usersSlice.actions
+export const { clearFeedback, logout } = usersSlice.actions
 export default usersSlice.reducer;

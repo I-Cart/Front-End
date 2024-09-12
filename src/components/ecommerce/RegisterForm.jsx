@@ -19,10 +19,20 @@ import { clearFeedback, createUser } from "@/store/users/usersSlice";
 import { useEffect, useLayoutEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-function RegisterForm() {
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+function RegisterForm({ isAdmin }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      role: "user",
+    },
     mode: "onBlur",
   });
   const { loading, errors } = useSelector((state) => state.users);
@@ -34,12 +44,12 @@ function RegisterForm() {
   }, [dispatch]);
   useEffect(() => {
     if (loading === "succeeded") {
-      navigate("/login");
+      navigate(isAdmin ? "/" : "/login");
       toast({
         description: "✅Registered successfully!",
       });
     }
-  }, [loading, navigate, toast]);
+  }, [loading, navigate, toast, isAdmin]);
   useEffect(() => {
     if (loading === "failed") {
       errors.forEach((error) => {
@@ -122,6 +132,32 @@ function RegisterForm() {
               </FormItem>
             )}
           />
+          {isAdmin && (
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
           <Button
             disabled={
               loading === "pending" ||
