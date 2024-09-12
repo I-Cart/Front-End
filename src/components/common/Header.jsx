@@ -4,6 +4,7 @@ import HeaderAvatar from "./HeaderAvatar";
 import HeaderMenu from "./HeaderMenu";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
+import CartIcon from "../ecommerce/CartIcon";
 
 function Header() {
   const user = useSelector((state) => state.auth.user);
@@ -15,7 +16,8 @@ function Header() {
         </Link>
       </div>
       <HeaderList />
-      <div className="flex gap-3">
+      <div className="flex items-center gap-3">
+        <CartIcon />
         {user ? (
           <HeaderAvatar />
         ) : (

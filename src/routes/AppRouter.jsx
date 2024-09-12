@@ -4,12 +4,9 @@ import Error from "@/pages/Error";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
-import { store } from "@/store";
-import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import authLoader from "./loaders/authLoader";
+import Cart from "@/pages/Cart";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -21,31 +18,24 @@ const browserRouter = createBrowserRouter([
         element: <Home />,
         index: true,
       },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
   },
   {
     path: "/",
-    loader: async ({ request }) => {
-      const pathname = new URL(request.url).pathname;
-
-      let isRehydrated = store.getState().auth._persist.rehydrated;
-      while (!isRehydrated) {
-        isRehydrated = await store.getState().auth._persist.rehydrated;
-      }
-      const user = store.getState().auth.user;
-      if (pathname === "/login" && user) return redirect("/");
-      if (pathname === "/register" && user?.role !== "admin")
-        return redirect("/");
-      return null;
-    },
     element: <LoginLayout />,
     children: [
       {
         path: "/login",
+        loader: authLoader(["guest"]),
         element: <Login />,
       },
       {
         path: "/register",
+        loader: authLoader(["guest", "admin"]),
         element: <Register />,
       },
     ],
