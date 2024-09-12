@@ -1,10 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import ReusableButton from "./ReusableButton";
 import { useEffect } from "react";
+import CarouselSlider from "./CarouselSlider";
+import { useSelector } from "react-redux";
 
 function MainViewSection() {
   const { hash } = useLocation();
-
+  const productsArray = useSelector((state) => state.products.products);
+  console.log(productsArray);
   useEffect(() => {
     if (hash) {
       const element = document.querySelector(hash);
@@ -33,9 +36,9 @@ function MainViewSection() {
             </span>
           </div>
           <div className="flex gap-5">
-            <a href="#mot">
+            <Link to="#order">
               <ReusableButton>Order Now !</ReusableButton>
-            </a>
+            </Link>
             <Link>
               <ReusableButton variant="secondary">Contact us</ReusableButton>
             </Link>
@@ -49,10 +52,41 @@ function MainViewSection() {
           />
         </div>
       </div>
-      <div className="text-[50px]" id="order">
-        Hello world Hello world Hello world Hello world Hello world Hello world
-        Hello world Hello world Hello world Hello world Hello world Hello world
-        Hello world Hello world Hello world Hello world
+      <div className="text-[50px] p-[40px]" id="order">
+        <CarouselSlider
+          productsArray={productsArray}
+          carouselName={"all products".toUpperCase()}
+        />
+        <CarouselSlider
+          productsArray={productsArray.filter(
+            (product) => product.cat_prefix === "men"
+          )}
+          carouselName={"Men products".toUpperCase()}
+        />
+        <CarouselSlider
+          productsArray={productsArray.filter(
+            (product) => product.cat_prefix === "women"
+          )}
+          carouselName={"Women products".toUpperCase()}
+        />
+        <CarouselSlider
+          productsArray={productsArray.filter(
+            (product) => product.cat_prefix === "sport"
+          )}
+          carouselName={"Sports products".toUpperCase()}
+        />
+        <CarouselSlider
+          productsArray={productsArray.filter(
+            (product) => product.cat_prefix === "kids"
+          )}
+          carouselName={"Kids products".toUpperCase()}
+        />
+        <CarouselSlider
+          productsArray={productsArray.filter(
+            (product) => product.cat_prefix === "baby"
+          )}
+          carouselName={"Baby products".toUpperCase()}
+        />
       </div>
     </>
   );
