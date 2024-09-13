@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReusableBadge from "../common/ReusableBadge";
 import ReusableButton from "../common/ReusableButton";
 import { addProduct } from "@/store/cart/cartSlice";
+import ProductInCart from "./ProductInCart";
 
 function ProductToBuy({ id }) {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ function ProductToBuy({ id }) {
         (product) => product.id === Number(id)
       )[0]
   );
+  const productInCart = cart.some((cartItem) => cartItem.id === Number(id));
+  console.log(productInCart);
   const { cat_prefix, title, price, img, description } = targetedProduct;
   function handleOnClick() {
     dispatch(addProduct(targetedProduct));
@@ -36,16 +39,20 @@ function ProductToBuy({ id }) {
           Description : {description}
         </div>
         <div className="mt-[40px] ">
-          <ReusableButton center={true} onClick={handleOnClick}>
-            Add to Cart
-          </ReusableButton>
+          {productInCart ? (
+            <ProductInCart />
+          ) : (
+            <ReusableButton center={true} onClick={handleOnClick}>
+              Add to Cart
+            </ReusableButton>
+          )}
         </div>
       </div>
       <div id="preview" className=" relative  ">
         <img
           src={img}
           alt=""
-          className=" rounded-xl max-w-[300px] md:max-w-[700px] "
+          className=" rounded-xl max-w-[300px] lg:max-w-[700px] "
         />
         <div className=" absolute top-3 left-3 ">
           <ReusableBadge>Preview</ReusableBadge>
