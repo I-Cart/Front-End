@@ -54,6 +54,22 @@ export default {
 					'4': 'hsl(var(--chart-4))',
 					'5': 'hsl(var(--chart-5))'
 				}
+			},
+			animation: {
+				"pulse": "pulse 1s 1"
+			},
+			keyframes: {
+				pulse: {
+					"0%": {
+						transform: 'scale(1)'
+					},
+					"50%": {
+						transform: 'scale(1.1)'
+					},
+					"100%": {
+						transform: 'scale(1)'
+					}
+				}
 			}
 		}
 	},

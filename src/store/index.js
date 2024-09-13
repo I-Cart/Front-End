@@ -1,7 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cart from "./cart/cartSlice";
 import products from "./products/productsSlice";
-import categories from "./categories/categoriesSlice";
 import {
   persistReducer,
   persistStore,
@@ -28,14 +27,7 @@ const combinedReducers = combineReducers({
     },
     cart
   ),
-  products: persistReducer(
-    {
-      key: "products",
-      storage,
-    },
-    products
-  ),
-  categories,
+  products,
   users: persistReducer(
     {
       key: "users",

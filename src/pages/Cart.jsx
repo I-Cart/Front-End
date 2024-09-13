@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -11,48 +10,10 @@ import {
 
 import { Link } from "react-router-dom";
 import CartItem from "@/components/ecommerce/CartItem";
-
-// Mock data for cart items
-const initialCartItems = [
-  {
-    id: 1,
-    name: "Product 1",
-    price: 19.99,
-    quantity: 2,
-    image: "/assets/manInGreen.jpg",
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    price: 29.99,
-    quantity: 1,
-    image: "/assets/manInGreen.jpg",
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    price: 39.99,
-    quantity: 3,
-    image: "/assets/manInGreen.jpg",
-  },
-];
+import { useSelector } from "react-redux";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState(initialCartItems);
-
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity >= 0) {
-      setCartItems(
-        cartItems.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    }
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
+  const cartItems = useSelector((state) => state.cart.cart);
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,

@@ -1,10 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import login from "./thunks/login";
+import { resetCart } from "../cart/cartSlice";
 const initialState = {
     user: null,
     loading: "idle",
     error: null
 };
+const logout = createAsyncThunk('auth/logout', (_, { dispatch }) => {
+    dispatch(resetCart())
+    return
+})
 const usersSlice = createSlice({
     name: "auth",
     initialState,
@@ -13,10 +18,9 @@ const usersSlice = createSlice({
             state.error = null
             state.loading = "idle";
         },
-        logout(state) {
-            state.error = null;
-            state.loading = "idle";
-            state.user = null
+
+        updateUserCart(state, { payload }) {
+            state.user.cart = payload
         }
     },
     extraReducers(builder) {
@@ -29,9 +33,13 @@ const usersSlice = createSlice({
         }).addCase(login.rejected, (state, action) => {
             state.loading = "failed";
             state.error = action.payload
+        }).addCase(logout.fulfilled, (state) => {
+            state.error = null;
+            state.loading = "idle";
+            state.user = null
         })
     },
 });
-export { login }
-export const { clearFeedback, logout } = usersSlice.actions
+export { login, logout }
+export const { clearFeedback, updateUserCart } = usersSlice.actions
 export default usersSlice.reducer;

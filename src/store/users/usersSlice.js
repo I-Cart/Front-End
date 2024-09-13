@@ -20,8 +20,15 @@ const usersSlice = createSlice({
     clearFeedback: (state) => {
       state.errors = null
       state.loading = "idle";
+    },
+    updateSpecificUserCart: (state, { payload }) => {
+      console.log(payload)
+      state.users.find(user => user.email === payload.user.email).cart = payload.cart
+      console.log(payload)
+
     }
-  },
+  }
+  ,
   extraReducers(builder) {
     builder.addCase(createUser.pending, (state) => {
       state.loading = "pending";
@@ -35,6 +42,6 @@ const usersSlice = createSlice({
     })
   },
 });
-export const { clearFeedback } = usersSlice.actions
+export const { clearFeedback, updateSpecificUserCart } = usersSlice.actions
 export { createUser }
 export default usersSlice.reducer;

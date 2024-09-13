@@ -1,21 +1,26 @@
 import { useDispatch, useSelector } from "react-redux";
 import ReusableBadge from "../common/ReusableBadge";
 import ReusableButton from "../common/ReusableButton";
-import { addProduct } from "@/store/cart/cartSlice";
+import { addProduct, removeProduct } from "@/store/cart/cartSlice";
 
 function ProductToBuy({ id }) {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.cart);
   const targetedProduct = useSelector(
     (state) =>
       state?.products?.products.filter(
         (product) => product.id === Number(id)
       )[0]
   );
+  const isTargetInCart = useSelector(
+    (state) => !!state.cart.cart.find((el) => el.id === targetedProduct.id)
+  );
   const { cat_prefix, title, price, img, description } = targetedProduct;
   function handleOnClick() {
-    dispatch(addProduct(targetedProduct));
-    console.log("added");
+    if (isTargetInCart) {
+      dispatch(removeProduct(targetedProduct.id));
+    } else {
+      dispatch(addProduct(targetedProduct));
+    }
   }
   return (
     <div className=" mt-[30px] mb-[30px] sm:p-[10px] md:p-[40px] flex flex-col-reverse md:flex-row items-center gap-[20px] mx-auto">
@@ -36,8 +41,12 @@ function ProductToBuy({ id }) {
           Description : {description}
         </div>
         <div className="mt-[40px] ">
-          <ReusableButton center={true} onClick={handleOnClick}>
-            Add to Cart
+          <ReusableButton
+            variant={(isTargetInCart && "destructive") || "default"}
+            center={true}
+            onClick={handleOnClick}
+          >
+            {isTargetInCart ? "Remove from Cart" : "Add to Cart"}
           </ReusableButton>
         </div>
       </div>
@@ -45,7 +54,7 @@ function ProductToBuy({ id }) {
         <img
           src={img}
           alt=""
-          className=" rounded-xl max-w-[300px] md:max-w-[700px] "
+          className=" rounded-xl max-w-[300px] max-h-80 md:max-w-[700px] "
         />
         <div className=" absolute top-3 left-3 ">
           <ReusableBadge>Preview</ReusableBadge>

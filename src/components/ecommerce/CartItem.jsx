@@ -13,40 +13,50 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import { useDispatch } from "react-redux";
+import { removeProduct, updateProductQuantity } from "@/store/cart/cartSlice";
 
 function CartItem({ item }) {
+  const dispatch = useDispatch();
+  const updateQuantity = (id, newQuantity) => {
+    dispatch(updateProductQuantity({ id, quantity: newQuantity }));
+  };
+
+  const removeItem = (id) => {
+    dispatch(removeProduct(id));
+  };
   return (
     <TableRow key={item.id}>
       <TableCell>
         <img
-          src={item.image}
+          src={item.img}
           alt={item.name}
           className="w-12 h-12 object-cover rounded-md"
         />
       </TableCell>
-      <TableCell className="font-medium">{item.name}</TableCell>
+      <TableCell className="font-medium">{item.title}</TableCell>
       <TableCell>${item.price.toFixed(2)}</TableCell>
       <TableCell>
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
             size="icon"
-            // onClick={() => updateQuantity(item.id, item.quantity - 1)}
+            onClick={() => updateQuantity(item.id, item.quantity - 1)}
           >
             <Minus className="h-4 w-4" />
           </Button>
           <Input
             type="number"
             value={item.quantity}
-            // onChange={(e) =>
-            //   updateQuantity(item.id, parseInt(e.target.value) || 0)
-            // }
+            onChange={(e) =>
+              updateQuantity(item.id, parseInt(e.target.value) || 0)
+            }
             className="w-16 text-center"
           />
           <Button
             variant="outline"
             size="icon"
-            // onClick={() => updateQuantity(item.id, item.quantity + 1)}
+            onClick={() => updateQuantity(item.id, item.quantity + 1)}
           >
             <Plus className="h-4 w-4" />
           </Button>
@@ -70,9 +80,7 @@ function CartItem({ item }) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-              //   onClick={() => removeItem(item.id)}
-              >
+              <AlertDialogAction onClick={() => removeItem(item.id)}>
                 Remove
               </AlertDialogAction>
             </AlertDialogFooter>
