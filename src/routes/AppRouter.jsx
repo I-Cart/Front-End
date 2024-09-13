@@ -7,6 +7,7 @@ import Register from "@/pages/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import authLoader from "./loaders/authLoader";
 import Cart from "@/pages/Cart";
+import Gallery from "@/pages/Gallery";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const browserRouter = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/gallery",
+        element: <Gallery />,
       },
     ],
   },
