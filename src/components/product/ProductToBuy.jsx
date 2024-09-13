@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import ReusableBadge from "../common/ReusableBadge";
 import ReusableButton from "../common/ReusableButton";
-import { addProduct, removeProduct } from "@/store/cart/cartSlice";
+import { addProduct } from "@/store/cart/cartSlice";
+import ProductInCart from "./ProductInCart";
 
 function ProductToBuy({ id }) {
   const dispatch = useDispatch();
@@ -11,16 +12,12 @@ function ProductToBuy({ id }) {
         (product) => product.id === Number(id)
       )[0]
   );
-  const isTargetInCart = useSelector(
-    (state) => !!state.cart.cart.find((el) => el.id === targetedProduct.id)
-  );
+  const cart = useSelector((state) => state?.cart.cart);
+  const productInCart = cart.some((cartItem) => cartItem.id === Number(id));
+  console.log(productInCart);
   const { cat_prefix, title, price, img, description } = targetedProduct;
   function handleOnClick() {
-    if (isTargetInCart) {
-      dispatch(removeProduct(targetedProduct.id));
-    } else {
-      dispatch(addProduct(targetedProduct));
-    }
+    dispatch(addProduct(targetedProduct));
   }
   return (
     <div className=" mt-[30px] mb-[30px] sm:p-[10px] md:p-[40px] flex flex-col-reverse md:flex-row items-center gap-[20px] mx-auto">
@@ -41,13 +38,13 @@ function ProductToBuy({ id }) {
           Description : {description}
         </div>
         <div className="mt-[40px] ">
-          <ReusableButton
-            variant={(isTargetInCart && "destructive") || "default"}
-            center={true}
-            onClick={handleOnClick}
-          >
-            {isTargetInCart ? "Remove from Cart" : "Add to Cart"}
-          </ReusableButton>
+          {productInCart ? (
+            <ProductInCart />
+          ) : (
+            <ReusableButton center={true} onClick={handleOnClick}>
+              Add to Cart
+            </ReusableButton>
+          )}
         </div>
       </div>
       <div id="preview" className=" relative  ">

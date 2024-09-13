@@ -22,10 +22,7 @@ const usersSlice = createSlice({
       state.loading = "idle";
     },
     updateSpecificUserCart: (state, { payload }) => {
-      console.log(payload)
       state.users.find(user => user.email === payload.user.email).cart = payload.cart
-      console.log(payload)
-
     }
   }
   ,

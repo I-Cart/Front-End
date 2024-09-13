@@ -12,11 +12,9 @@ const login = createAsyncThunk("auth/login", async (payload, thunkAPI) => {
     }
     if (cart.length > 0) {
         const combinedCart = Object.groupBy([...cart, ...user.cart], ({ id }) => id)
-        console.log(combinedCart)
         const newCart = Object.values(combinedCart).map((arr) => arr.reduce((acc, el) => ({ ...acc, quantity: acc.quantity + el.quantity })))
         dispatch(updateSpecificUserCart({ cart: newCart, user }))
         dispatch(setCart(newCart))
-        console.log(newCart)
         return user
     }
     return user
