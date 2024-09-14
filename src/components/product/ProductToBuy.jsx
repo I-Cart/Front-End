@@ -14,13 +14,13 @@ function ProductToBuy({ id }) {
   );
   const cart = useSelector((state) => state?.cart.cart);
   const productInCart = cart.some((cartItem) => cartItem.id === Number(id));
-  console.log(productInCart);
+
   const { cat_prefix, title, price, img, description } = targetedProduct;
   function handleOnClick() {
     dispatch(addProduct(targetedProduct));
   }
   return (
-    <div className=" mt-[30px] mb-[30px] sm:p-[10px] md:p-[40px] flex flex-col-reverse md:flex-row items-center gap-[20px] mx-auto">
+    <div className=" mt-[30px] mb-[30px] sm:p-[10px] md:p-[40px] flex-1 flex flex-col-reverse md:flex-row items-center gap-[20px] mx-auto">
       <div id="info" className="px-8 md:px-0">
         <div className="flex gap-5 items-end">
           <h2 className=" text-[hsl(var(--primary))] text-[25px] md:text-[40px] font-bold">
