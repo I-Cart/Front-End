@@ -22,7 +22,7 @@ export default function Cart() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="container mx-auto p-4 text-center">
+      <div className="container flex-1 flex flex-col justify-center items-center mx-auto p-4 text-center">
         <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
         <p className="text-lg">
           Your cart is empty. Start shopping to add items to your cart!
@@ -36,7 +36,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto flex-1 p-4">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
       <Table>
         <TableCaption>A list of your cart items.</TableCaption>
@@ -60,7 +60,9 @@ export default function Cart() {
         <div className="text-xl font-semibold">
           Subtotal: ${subtotal.toFixed(2)}
         </div>
-        <Button size="lg">Proceed to Checkout</Button>
+        <Button asChild size="lg">
+          <Link to={"/check-out"}>Proceed to Checkout</Link>
+        </Button>
       </div>
     </div>
   );

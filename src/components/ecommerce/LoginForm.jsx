@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import loginSchema from "@/schemas/loginSchema";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Separator } from "../ui/separator";
 import { useDispatch, useSelector } from "react-redux";
 import { clearFeedback, login } from "@/store/auth/authSlice";
@@ -21,6 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import PasswordInput from "../common/PasswordInput";
 
 function LoginForm() {
+  const [searchParams] = useSearchParams();
+  const fallback = searchParams.get("fallback");
   const form = useForm({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
@@ -42,14 +44,14 @@ function LoginForm() {
   }, [error, toast]);
   useEffect(() => {
     if (loading === "succeeded") {
-      navigate("/", {
+      navigate(fallback ?? "/", {
         replace: true,
       });
       toast({
         title: "✅ Logged in successfully!",
       });
     }
-  }, [loading, navigate, toast]);
+  }, [loading, navigate, toast, fallback]);
   function onSubmit(values) {
     dispatch(login(values));
   }

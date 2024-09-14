@@ -4,14 +4,14 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { IoMenu } from "react-icons/io5";
-import ReusableButton from "./ReusableButton";
-import { Link } from "react-router-dom";
-import HeaderAvatar from "./HeaderAvatar";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+
 function HeaderMenu() {
+  const user = useSelector((state) => state.auth.user);
   return (
     <div className="md:hidden">
       <Menubar>
@@ -21,16 +21,18 @@ function HeaderMenu() {
           </MenubarTrigger>
           <MenubarContent>
             <MenubarItem>
-              <Link to="">Section1</Link>
+              <NavLink to="/gallery">Gallery</NavLink>
             </MenubarItem>
             <MenubarItem>
               {" "}
-              <Link to="">Section2</Link>
+              <NavLink to="/about">About US</NavLink>
             </MenubarItem>
-            <MenubarItem>
-              {" "}
-              <Link to="">Section3</Link>
-            </MenubarItem>
+            {user && (
+              <MenubarItem>
+                {" "}
+                <NavLink to="/orders">Your Orders</NavLink>
+              </MenubarItem>
+            )}
             <MenubarSeparator />
           </MenubarContent>
         </MenubarMenu>

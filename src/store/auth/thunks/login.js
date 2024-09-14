@@ -1,5 +1,6 @@
 import { sleep } from "@/lib/utils";
 import { setCart } from "@/store/cart/cartSlice";
+import { setOrders } from "@/store/orders/ordersSlice";
 import { updateSpecificUserCart } from "@/store/users/usersSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const login = createAsyncThunk("auth/login", async (payload, thunkAPI) => {
@@ -15,8 +16,9 @@ const login = createAsyncThunk("auth/login", async (payload, thunkAPI) => {
         const newCart = Object.values(combinedCart).map((arr) => arr.reduce((acc, el) => ({ ...acc, quantity: acc.quantity + el.quantity })))
         dispatch(updateSpecificUserCart({ cart: newCart, user }))
         dispatch(setCart(newCart))
-        return user
-    }
+
+    } else dispatch(setCart(user.cart))
+    dispatch(setOrders(user.orders))
     return user
 })
 export default login;

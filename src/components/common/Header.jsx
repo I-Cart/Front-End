@@ -9,10 +9,10 @@ import CartIcon from "../ecommerce/CartIcon";
 function Header() {
   const user = useSelector((state) => state.auth.user);
   return (
-    <div className="w-full h-32 bg-[hsl(var(--primary))]  p-[15px] pl-[25px] flex items-center justify-between">
+    <div className="w-full bg-primary  pr-[15px] pl-[25px] flex items-center justify-between">
       <div>
         <Link to="/" className="flex items-center">
-          <img src="/assets/logo.png" alt="" className="w-32" />
+          <img src="/assets/logo.png" alt="" className="size-20" />
         </Link>
       </div>
       <HeaderList />

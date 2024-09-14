@@ -19,7 +19,9 @@ import { removeProduct, updateProductQuantity } from "@/store/cart/cartSlice";
 function CartItem({ item }) {
   const dispatch = useDispatch();
   const updateQuantity = (id, newQuantity) => {
-    dispatch(updateProductQuantity({ id, quantity: newQuantity }));
+    if (newQuantity > 0) {
+      dispatch(updateProductQuantity({ id, quantity: newQuantity }));
+    }
   };
 
   const removeItem = (id) => {

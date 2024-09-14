@@ -8,7 +8,8 @@ const initialState = {
     password: "Aa123456",
     phone: "01019497970",
     role: "admin",
-    cart: []
+    cart: [],
+    orders: []
   }],
   loading: "idle",
   errors: null
@@ -23,8 +24,12 @@ const usersSlice = createSlice({
     },
     updateSpecificUserCart: (state, { payload }) => {
       state.users.find(user => user.email === payload.user.email).cart = payload.cart
+    },
+    updateSpecificUserOrders: (state, { payload }) => {
+      state.users.find(user => user.email === payload.user.email).orders.push(payload.order);
     }
   }
+
   ,
   extraReducers(builder) {
     builder.addCase(createUser.pending, (state) => {
@@ -39,6 +44,6 @@ const usersSlice = createSlice({
     })
   },
 });
-export const { clearFeedback, updateSpecificUserCart } = usersSlice.actions
+export const { clearFeedback, updateSpecificUserCart, updateSpecificUserOrders } = usersSlice.actions
 export { createUser }
 export default usersSlice.reducer;

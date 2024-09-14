@@ -10,6 +10,8 @@ import Cart from "@/pages/Cart";
 import ProductPage from "@/pages/ProductPage";
 import Gallery from "@/pages/Gallery";
 import AboutUs from "@/pages/AboutUs";
+import Checkout from "@/pages/Checkout";
+import Orders from "@/pages/Orders";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -36,6 +38,16 @@ const browserRouter = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs />,
+      },
+      {
+        path: "/check-out",
+        element: <Checkout />,
+        loader: authLoader(["user", "admin"]),
+      },
+      {
+        path: "/orders",
+        loader: authLoader(["user", "admin"]),
+        element: <Orders />,
       },
     ],
   },
