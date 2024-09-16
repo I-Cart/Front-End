@@ -3,15 +3,15 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { IoMenu } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function HeaderMenu() {
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   return (
     <div className="md:hidden">
       <Menubar>
@@ -20,20 +20,22 @@ function HeaderMenu() {
             <IoMenu color="hsl(var(--primary))" className=" cursor-pointer" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>
-              <NavLink to="/gallery">Gallery</NavLink>
+            <MenubarItem onClick={() => navigate("/gallery")}>
+              Gallery
             </MenubarItem>
-            <MenubarItem>
-              {" "}
-              <NavLink to="/about">About US</NavLink>
+            <MenubarItem onClick={() => navigate("/about")}>
+              About US
             </MenubarItem>
             {user && (
-              <MenubarItem>
-                {" "}
-                <NavLink to="/orders">Your Orders</NavLink>
+              <MenubarItem onClick={() => navigate("/orders")}>
+                Your Orders
               </MenubarItem>
             )}
-            <MenubarSeparator />
+            {user?.role === "admin" && (
+              <MenubarItem onClick={() => navigate("/dashboard")}>
+                Dashboard
+              </MenubarItem>
+            )}
           </MenubarContent>
         </MenubarMenu>
       </Menubar>

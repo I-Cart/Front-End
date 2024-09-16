@@ -1,5 +1,4 @@
 import PersonInfo from "@/components/about/PersonInfo";
-import { FaGithub } from "react-icons/fa";
 function AboutUs() {
   return (
     <div className="p-[40px] flex-1">

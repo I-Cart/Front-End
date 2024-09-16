@@ -26,7 +26,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-function RegisterForm({ isAdmin }) {
+import { cn } from "@/lib/utils";
+function RegisterForm({ isAdmin, setIsOpen }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(registerSchema),
@@ -44,12 +45,18 @@ function RegisterForm({ isAdmin }) {
   }, [dispatch]);
   useEffect(() => {
     if (loading === "succeeded") {
-      navigate(isAdmin ? "/" : "/login");
+      if (!isAdmin) {
+        navigate("/login");
+      } else {
+        setIsOpen(false);
+      }
       toast({
-        description: "✅Registered successfully!",
+        description: isAdmin
+          ? "✅User created successfully!"
+          : "✅Registered successfully!",
       });
     }
-  }, [loading, navigate, toast, isAdmin]);
+  }, [loading, navigate, toast, isAdmin, setIsOpen]);
   useEffect(() => {
     if (loading === "failed") {
       errors.forEach((error) => {
@@ -63,7 +70,14 @@ function RegisterForm({ isAdmin }) {
     dispatch(createUser(values));
   }
   return (
-    <div className="max-w-96 w-full px-2 py-3 md:px-5 md:py-7 border rounded-md mx-auto mt-5 ">
+    <div
+      className={cn(
+        "max-w-96 w-full px-2 py-3 md:px-5 md:py-7 border rounded-md mx-auto mt-5 ",
+        {
+          "max-h-[70vh] overflow-auto": isAdmin,
+        }
+      )}
+    >
       <h1 className="font-bold mb-2 text-3xl text-center">Register</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -172,22 +186,26 @@ function RegisterForm({ isAdmin }) {
                 Please wait...
               </>
             ) : (
-              <>Submit</>
+              <>{isAdmin ? "Create User" : "Register"}</>
             )}
           </Button>
         </form>
       </Form>
-      <Separator className="my-5" />
-      <p className="text-center text-gray-400">
-        Already have an account?{" "}
-        <Link
-          to="/login"
-          className="text-primary hover:text-yellow-300 transition-colors duration-300"
-        >
-          Login
-        </Link>{" "}
-        Now.
-      </p>
+      {!isAdmin && (
+        <>
+          <Separator className="my-5" />
+          <p className="text-center text-gray-400">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-primary hover:text-yellow-300 transition-colors duration-300"
+            >
+              Login
+            </Link>{" "}
+            Now.
+          </p>
+        </>
+      )}
     </div>
   );
 }

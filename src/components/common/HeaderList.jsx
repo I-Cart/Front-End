@@ -53,7 +53,24 @@ function HeaderList() {
           </ReusableButton>
         </NavLink>
       )}
-      <NavLink to="">{/* <ReusableButton>section3</ReusableButton> */}</NavLink>
+      {user?.role === "admin" && (
+        <NavLink
+          className={({ isActive }) => {
+            return cn("group", {
+              active: isActive,
+            });
+          }}
+          to="/dashboard"
+        >
+          <ReusableButton
+            className={
+              "group-[.active]:bg-cyan-50 group-[.active]:text-primary"
+            }
+          >
+            Dashboard
+          </ReusableButton>
+        </NavLink>
+      )}
     </div>
   );
 }

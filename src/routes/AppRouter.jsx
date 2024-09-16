@@ -12,6 +12,9 @@ import Gallery from "@/pages/Gallery";
 import AboutUs from "@/pages/AboutUs";
 import Checkout from "@/pages/Checkout";
 import Orders from "@/pages/Orders";
+import Dashboard from "@/pages/Dashboard";
+import BackToHomeOnLogout from "@/components/common/BackToHomeOnLogout";
+import NotFound from "@/pages/NotFound";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -41,13 +44,34 @@ const browserRouter = createBrowserRouter([
       },
       {
         path: "/check-out",
-        element: <Checkout />,
+        element: (
+          <BackToHomeOnLogout>
+            <Checkout />
+          </BackToHomeOnLogout>
+        ),
         loader: authLoader(["user", "admin"]),
       },
       {
         path: "/orders",
         loader: authLoader(["user", "admin"]),
-        element: <Orders />,
+        element: (
+          <BackToHomeOnLogout>
+            <Orders />
+          </BackToHomeOnLogout>
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <BackToHomeOnLogout>
+            <Dashboard />
+          </BackToHomeOnLogout>
+        ),
+        loader: authLoader(["admin"]),
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
@@ -62,7 +86,7 @@ const browserRouter = createBrowserRouter([
       },
       {
         path: "/register",
-        loader: authLoader(["guest", "admin"]),
+        loader: authLoader(["guest"]),
         element: <Register />,
       },
     ],
