@@ -40,7 +40,7 @@ const usersSlice = createSlice({
       state.loading = "pending";
       state.errors = null;
     }).addCase(createUser.fulfilled, (state, action) => {
-      state.users.push({ ...action.payload, cart: [] });
+      state.users.push({ ...action.payload, cart: [], orders: [] });
       state.loading = "succeeded"
     }).addCase(createUser.rejected, (state, action) => {
       state.errors = action.payload;
