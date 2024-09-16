@@ -1,22 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { updateSpecificUserOrders } from "../users/usersSlice";
-import { updateUserOrders } from "../auth/authSlice";
-import { resetCart } from "../cart/cartSlice";
+import createOrder from "./thunks/createOrder";
 
 const initialState = {
     orders: [],
 };
-export const createOrder = createAsyncThunk('orders/createOrder', async (payload, { dispatch, getState }) => {
-    const { auth, } = getState();
-    const order = payload
-    if (auth.user) {
-        dispatch(updateSpecificUserOrders({ user: auth.user, order }))
-        dispatch(updateUserOrders(order))
-        dispatch(resetCart())
-    }
-    return order
-})
 
 
 const ordersSlice = createSlice({
@@ -36,5 +24,6 @@ const ordersSlice = createSlice({
         })
     }
 });
+export { createOrder }
 export const { resetOrders, setOrders } = ordersSlice.actions;
 export default ordersSlice.reducer;

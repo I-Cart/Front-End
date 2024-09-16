@@ -22,7 +22,7 @@ function ProductsGallery({ product }) {
             </CardTitle>
             <CardDescription>
               {" "}
-              <span>{cat_prefix}</span>
+              <span className="text-primary">{cat_prefix}</span>
             </CardDescription>
           </CardHeader>
           <CardFooter className=" flex items-end gap-5">
@@ -33,7 +33,7 @@ function ProductsGallery({ product }) {
         </div>
 
         <CardContent className="flex flex-col h-full">
-          <img src={img} alt="" className="rounded-md" />
+          <img src={img} alt="" className="rounded-md aspect-[2/3]" />
         </CardContent>
       </Card>
     </Link>

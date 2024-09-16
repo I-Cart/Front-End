@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
@@ -23,42 +22,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import { createOrder } from "@/store/orders/ordersSlice";
 import { useNavigate } from "react-router-dom";
-const formSchema = z.object({
-  firstName: z
-    .string()
-    .min(2, { message: "First name must be at least 2 characters." }),
-  lastName: z
-    .string()
-    .min(2, { message: "Last name must be at least 2 characters." }),
-  email: z.string().email({ message: "Invalid email address." }),
-  address: z
-    .string()
-    .min(5, { message: "Address must be at least 5 characters." }),
-  city: z.string().min(2, { message: "City must be at least 2 characters." }),
-  country: z.string().min(2, { message: "Please select a country." }),
-  zipCode: z
-    .string()
-    .min(5, { message: "ZIP code must be at least 5 characters." }),
-  cardName: z
-    .string()
-    .min(2, { message: "Name on card must be at least 2 characters." }),
-  cardNumber: z
-    .string()
-    .regex(/^\d{16}$/, { message: "Card number must be 16 digits." }),
-  expirationDate: z.string().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, {
-    message: "Expiration date must be in MM/YY format.",
-  }),
-  cvv: z.string().regex(/^\d{3,4}$/, { message: "CVV must be 3 or 4 digits." }),
-});
+import checkoutSchema from "@/schemas/checkoutSchema";
 
 function CheckoutForm({ cartItems, price }) {
   const user = useSelector((state) => state.auth.user);
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      firstName: user.name.split(" ")[0],
-      lastName: user.name.split(" ").at(-1),
-      email: user.email,
+      firstName: user?.name.split(" ")[0],
+      lastName: user?.name.split(" ").at(-1),
+      email: user?.email,
       address: "",
       city: "",
       country: "",

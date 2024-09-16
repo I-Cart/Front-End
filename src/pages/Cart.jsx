@@ -23,7 +23,7 @@ export default function Cart() {
   if (cartItems.length === 0) {
     return (
       <div className="container flex-1 flex flex-col justify-center items-center mx-auto p-4 text-center">
-        <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
+        <h1 className="text-2xl text-primary font-bold mb-4">Your Cart</h1>
         <p className="text-lg">
           Your cart is empty. Start shopping to add items to your cart!
         </p>

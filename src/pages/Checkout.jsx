@@ -17,7 +17,7 @@ export default function Checkout() {
   };
   return (
     <div className="container flex-1 mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Checkout</h1>
+      <h1 className="text-2xl text-primary font-bold mb-4">Checkout</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <CheckoutForm price={price} cartItems={cartItems} />
         <OrderSummary price={price} cartItems={cartItems} />

@@ -17,65 +17,25 @@ import {
 } from "@/components/ui/dialog";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-const OrderDetails = ({ order }) => (
-  <Card className="max-w-full overflow-auto">
-    <CardHeader>
-      <CardTitle>Order Details: {order.id}</CardTitle>
-      <CardDescription>
-        Placed on {format(order.date, "MMMM d, yyyy")}
-      </CardDescription>
-    </CardHeader>
-    <CardContent className="max-h-[50vh] overflow-auto max-w-full">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Product</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Total</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {order.items.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.title}</TableCell>
-              <TableCell>{item.quantity}</TableCell>
-              <TableCell>${item.price.toFixed(2)}</TableCell>
-              <TableCell>${(item.quantity * item.price).toFixed(2)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </CardContent>
-    <CardFooter className="flex justify-end">
-      <div className="text-lg font-bold">
-        Total: ${order.price.total.toFixed(2)}
-      </div>
-    </CardFooter>
-  </Card>
-);
+import OrderDetails from "./OrderDetails";
 function OrdersTable() {
   const orders = useSelector((state) => state.orders.orders);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentOrder = searchParams.get("order");
+  if (orders.length === 0) {
+    return (
+      <p className="text-center text-lg text-muted-foreground flex-1 h-full flex items-center justify-center">
+        No orders to Display.
+      </p>
+    );
+  }
   return (
     <Table>
-      <TableCaption>
-        {orders.length === 0
-          ? "No orders to Display."
-          : "A list of your recent orders."}
-      </TableCaption>
+      <TableCaption>A list of your recent orders.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Order ID</TableHead>

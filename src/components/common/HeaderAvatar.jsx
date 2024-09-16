@@ -33,7 +33,7 @@ function HeaderAvatar() {
             className="rounded-full"
           />
           <AvatarFallback>
-            {user.name
+            {user?.name
               .split(" ")
               .map((el) => el[0].toUpperCase())
               .join("")}
@@ -43,8 +43,8 @@ function HeaderAvatar() {
       <PopoverContent>
         <div className="flex flex-col items-center gap-3">
           <h3 className="font-bold text-xl">{user?.name}</h3>
-          <Link to={"mailto:" + user.email}>{user.email}</Link>
-          <Link to={"tel:" + user.phone}>{user.phone}</Link>
+          <Link to={"mailto:" + user?.email}>{user?.email}</Link>
+          <Link to={"tel:" + user?.phone}>{user?.phone}</Link>
           <Dialog>
             <Button asChild variant={"destructive"}>
               <DialogTrigger>Logout</DialogTrigger>

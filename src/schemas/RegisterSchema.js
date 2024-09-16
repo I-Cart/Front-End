@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const registerSchema = z.object({
+export const userSchema = z.object({
     name: z.string({
         required_error: "name is required",
     }).min(3, "name must be at least 3 characters")
@@ -21,7 +21,8 @@ const registerSchema = z.object({
         message: "Please enter a valid number."
     }),
     role: z.enum(["admin", "user"]).default("user"),
-}).superRefine((data, ctx) => {
+})
+const registerSchema = userSchema.superRefine((data, ctx) => {
     if (data.password !== data.passwordConfirm) {
         ctx.addIssue({
             code: 'custom',

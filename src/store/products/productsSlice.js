@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+import updateProduct from "./thunks/updateProduct";
+import deleteProduct from "./thunks/deleteProduct";
+
 const initialState = {
   products: [
     {
@@ -76,10 +79,29 @@ const initialState = {
     },
   ],
 };
+
+
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
-});
+  reducers: {
+    createProduct(state, { payload }) {
+      const product = { ...payload, id: Math.random() }
+      state.products.push(product)
+    }
+  },
+  extraReducers(builder) {
+    builder.addCase(updateProduct.fulfilled, (state, action) => {
+      const index = state.products.findIndex(p => p.id === action.payload.id)
 
+      if (index !== -1) {
+        state.products[index] = { ...state.products[index], ...action.payload }
+      }
+    }).addCase(deleteProduct.fulfilled, (state, action) => {
+      state.products = state.products.filter(p => p.id !== action.payload)
+    })
+  }
+});
+export { updateProduct, deleteProduct }
+export const { createProduct } = productsSlice.actions;
 export default productsSlice.reducer;

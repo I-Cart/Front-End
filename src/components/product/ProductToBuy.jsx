@@ -3,6 +3,7 @@ import ReusableBadge from "../common/ReusableBadge";
 import ReusableButton from "../common/ReusableButton";
 import { addProduct } from "@/store/cart/cartSlice";
 import ProductInCart from "./ProductInCart";
+import NotFound from "@/pages/NotFound";
 
 function ProductToBuy({ id }) {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function ProductToBuy({ id }) {
       )[0]
   );
   const cart = useSelector((state) => state?.cart.cart);
+  if (!targetedProduct) return <NotFound message="Product not found" />;
   const productInCart = cart.some((cartItem) => cartItem.id === Number(id));
 
   const { cat_prefix, title, price, img, description } = targetedProduct;
