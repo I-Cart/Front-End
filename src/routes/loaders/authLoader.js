@@ -9,7 +9,10 @@ export default function authLoader(roles) {
     }
     const user = store.getState().auth.user;
     const userRole = user?.role ?? "guest";
-    if (!roles.includes(userRole)) return redirect(`/login?fallback=${new URL(request.url).pathname}`);
+    if (!roles.includes(userRole)) {
+      if (userRole === "guest") return redirect(`/login?fallback=${new URL(request.url).pathname}`);
+      return redirect("/");
+    }
     return null;
   };
 }

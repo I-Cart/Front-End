@@ -15,10 +15,11 @@ import storage from "redux-persist/lib/storage";
 import users from "./users/usersSlice";
 import authSlice from "./auth/authSlice";
 import ordersSlice from "./orders/ordersSlice";
+import messagesSlice from "./messages/messagesSlice";
 const rootPersistConfig = {
   key: "root",
   storage,
-  blacklist: ["users"],
+  blacklist: ["users", "cart", "auth"],
 };
 const combinedReducers = combineReducers({
   cart: persistReducer(
@@ -45,7 +46,8 @@ const combinedReducers = combineReducers({
     },
     authSlice
   ),
-  orders: ordersSlice
+  orders: ordersSlice,
+  messages: messagesSlice
 });
 const persistedReducer = persistReducer(rootPersistConfig, combinedReducers);
 

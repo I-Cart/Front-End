@@ -34,7 +34,25 @@ function HeaderList() {
         >
           About US
         </ReusableButton>
-      </NavLink>{" "}
+      </NavLink>
+      {user?.role !== "admin" && (
+        <NavLink
+          className={({ isActive }) => {
+            return cn("group", {
+              active: isActive,
+            });
+          }}
+          to="/contact-us"
+        >
+          <ReusableButton
+            className={
+              "group-[.active]:bg-cyan-50 group-[.active]:text-primary"
+            }
+          >
+            Contact US
+          </ReusableButton>
+        </NavLink>
+      )}
       {user && (
         <NavLink
           className={({ isActive }) => {

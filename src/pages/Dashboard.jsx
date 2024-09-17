@@ -1,4 +1,5 @@
 import AdminProducts from "@/components/ecommerce/AdminProducts";
+import Messages from "@/components/ecommerce/Messages";
 import Users from "@/components/ecommerce/Users";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -22,12 +23,21 @@ function Dashboard() {
           >
             Users
           </TabsTrigger>
+          <TabsTrigger
+            className="[&[aria-selected=true]]:bg-primary [&[aria-selected=true]]:text-white"
+            value="messages"
+          >
+            Messages
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="products">
           <AdminProducts />
         </TabsContent>
         <TabsContent value="users">
           <Users />
+        </TabsContent>
+        <TabsContent value="messages">
+          <Messages />
         </TabsContent>
       </Tabs>
     </div>

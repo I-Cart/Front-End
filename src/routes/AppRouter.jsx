@@ -15,6 +15,7 @@ import Orders from "@/pages/Orders";
 import Dashboard from "@/pages/Dashboard";
 import BackToHomeOnLogout from "@/components/common/BackToHomeOnLogout";
 import NotFound from "@/pages/NotFound";
+import ContactForm from "@/pages/ContactUs";
 const browserRouter = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,11 @@ const browserRouter = createBrowserRouter([
           </BackToHomeOnLogout>
         ),
         loader: authLoader(["admin"]),
+      },
+      {
+        path: "/contact-us",
+        element: <ContactForm />,
+        loader: authLoader(["user", "guest"]),
       },
       {
         path: "*",
