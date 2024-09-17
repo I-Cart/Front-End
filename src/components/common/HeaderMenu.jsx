@@ -26,6 +26,11 @@ function HeaderMenu() {
             <MenubarItem onClick={() => navigate("/about")}>
               About US
             </MenubarItem>
+            {user?.role !== "admin" && (
+              <MenubarItem onClick={() => navigate("/contact-us")}>
+                Contact US
+              </MenubarItem>
+            )}
             {user && (
               <MenubarItem onClick={() => navigate("/orders")}>
                 Your Orders

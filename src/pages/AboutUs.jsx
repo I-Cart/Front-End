@@ -37,7 +37,6 @@ function AboutUs() {
             />
           </ul>
         </div>
-
         <div>
           <img src="/assets/aboutus.svg" alt="" className="w-[600px]" />
         </div>
