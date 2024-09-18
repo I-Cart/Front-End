@@ -5,7 +5,7 @@ const initialState = {
   users: [{
     name: "Admin",
     email: "admin@icart.co",
-    password: "Aa123456",
+    password: "Aa123456$",
     phone: "01019497970",
     role: "admin",
     cart: [],

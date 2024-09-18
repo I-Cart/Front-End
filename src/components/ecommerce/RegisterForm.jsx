@@ -152,7 +152,7 @@ function RegisterForm({ isAdmin, setIsOpen }) {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Role</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}

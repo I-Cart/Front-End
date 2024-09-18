@@ -46,7 +46,7 @@ function MessageTableRow({ message }) {
                 View
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-3xl">
               <DialogHeader>
                 <DialogTitle>Message Details</DialogTitle>
                 <DialogDescription>
