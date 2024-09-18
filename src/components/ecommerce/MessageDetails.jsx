@@ -15,18 +15,20 @@ const MessageDetails = ({ message }) => {
     dispatch(markAsRead(message.id));
   }, [message.id, dispatch]);
   return (
-    <Card>
+    <Card className="overflow-auto max-w-full">
       <CardHeader>
         <CardTitle>{message.subject}</CardTitle>
         <CardDescription>
           From: {message.name} ({message.email})
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="max-h-[50vh] overflow-auto max-w-full">
         <p className="text-sm text-gray-500 mb-2">
           Received on: {format(message.date, "PPpp")}
         </p>
-        <p className="whitespace-pre-wrap">{message.message}</p>
+        <p className="whitespace-pre-wrap max-w-50 break-words overflow-hidden">
+          {message.message}
+        </p>
       </CardContent>
     </Card>
   );

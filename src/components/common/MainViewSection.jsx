@@ -1,21 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReusableButton from "./ReusableButton";
-import { useEffect } from "react";
 import CarouselSlider from "./CarouselSlider";
 import { useSelector } from "react-redux";
+import { useRef } from "react";
 
 function MainViewSection() {
-  const { hash } = useLocation();
   const productsArray = useSelector((state) => state.products.products);
-  useEffect(() => {
-    if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [hash]);
-
+  const sectionRef = useRef(null);
   return (
     <>
       <div className="flex justify-between items-center p-10 flex-1">
@@ -35,10 +26,14 @@ function MainViewSection() {
             </span>
           </div>
           <div className="flex gap-5">
-            <Link to="#order">
-              <ReusableButton>Order Now !</ReusableButton>
+            <Link to="/#order">
+              <ReusableButton
+                onClick={() => sectionRef.current.scrollIntoView()}
+              >
+                Order Now !
+              </ReusableButton>
             </Link>
-            <Link>
+            <Link to="/contact-us">
               <ReusableButton variant="secondary">Contact us</ReusableButton>
             </Link>
           </div>
@@ -51,7 +46,7 @@ function MainViewSection() {
           />
         </div>
       </div>
-      <div className="text-[50px] p-[40px]" id="order">
+      <div className="text-[50px] p-[40px]" ref={sectionRef} id="order">
         <CarouselSlider
           productsArray={productsArray}
           carouselName={"all products".toUpperCase()}
